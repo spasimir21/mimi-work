@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+* {
+  user-select: none;
+}
+
+input {
+  user-select: default !important;
+}
