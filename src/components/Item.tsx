@@ -1,10 +1,12 @@
 import { faCheck, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { type Item, ItemStoreContext } from '../context/ItemStoreContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BillStoreContext } from '../context/BillStoreContext';
 import { useContext, useState } from 'react';
 
 function Item({ item, refreshParent }: { item: Item; refreshParent: () => void }) {
   const ItemStore = useContext(ItemStoreContext);
+  const BillStore = useContext(BillStoreContext);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -31,6 +33,10 @@ function Item({ item, refreshParent }: { item: Item; refreshParent: () => void }
   const remove = () => {
     ItemStore.update(({ items }) => {
       delete items[item.id];
+    });
+
+    BillStore.update(({ bills }) => {
+      for (const bill of Object.values(bills)) delete bill.items[item.id];
     });
 
     refreshParent();
