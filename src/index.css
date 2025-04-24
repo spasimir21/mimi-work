@@ -1,9 +1,24 @@
 @import 'tailwindcss';
 
+:root {
+  --spinner-display: none;
+}
+
 * {
   user-select: none;
 }
 
 input {
   user-select: default !important;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: var(--spinner-display);
+  animation: spinner 1.5s linear infinite;
 }

@@ -24,7 +24,7 @@ function Item({ item, refreshParent }: { item: Item; refreshParent: () => void }
 
     ItemStore.update(({ items }) => {
       items[item.id].name = editedName;
-      items[item.id].price = editedPrice;
+      items[item.id].price = isNaN(editedPrice) ? 0 : editedPrice;
     });
 
     refreshParent();

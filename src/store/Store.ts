@@ -1,3 +1,5 @@
+import { updateSavingIndicator } from '../savingIndicator';
+
 // prettier-ignore
 type ReadonlyDeep<T> = 
     T extends (infer R)[] ? readonly ReadonlyDeep<R>[]
@@ -35,6 +37,8 @@ class Store<T> {
   }
 
   async save() {
+    updateSavingIndicator(true);
+
     try {
       await fetch(`/${this.key}`, {
         method: 'POST',
@@ -48,6 +52,8 @@ class Store<T> {
       localStorage.clear();
       window.location.reload();
     }
+
+    updateSavingIndicator(false);
   }
 }
 

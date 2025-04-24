@@ -34,4 +34,4 @@ app.post('/:bucket', (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(process.env.PORT, () => console.log('Server is listening!'));
+app.listen(process.env.PORT ?? 3000, () => console.log('Server is listening!'));
