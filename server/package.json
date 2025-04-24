@@ -7,11 +7,10 @@
     "start": "node main.js"
   },
   "engines": {
-    "node": "14.x"
+    "node": "^16.15.0"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^4.21.2"
   },
   "author": "Spasimir Pavlov",
   "license": "MIT"

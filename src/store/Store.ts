@@ -14,7 +14,7 @@ class Store<T> {
 
   async load() {
     try {
-      const req = await fetch(`http://localhost:3000/${this.key}`, {
+      const req = await fetch(`/${this.key}`, {
         headers: { 'x-password': this.password }
       });
 
@@ -36,7 +36,7 @@ class Store<T> {
 
   async save() {
     try {
-      await fetch(`http://localhost:3000/${this.key}`, {
+      await fetch(`/${this.key}`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

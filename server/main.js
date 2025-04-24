@@ -1,14 +1,11 @@
 const express = require('express');
 const crypto = require('crypto');
-const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 
 const passwordHash = process.env.PASSWORD_HASH;
 
 const app = express();
-
-app.use(cors());
 
 app.use(express.static(path.join(__dirname, './dist')));
 app.use(express.json());
