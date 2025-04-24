@@ -11,10 +11,10 @@ function Item({ item, refreshParent }: { item: Item; refreshParent: () => void }
   const [isEditing, setIsEditing] = useState(false);
 
   const [editedName, setEditedName] = useState(item.name);
-  const [editedPrice, setEditedPrice] = useState(item.price);
+  const [editedPrice, setEditedPrice] = useState(item.price ?? 0);
 
   const startEditing = () => {
-    setEditedPrice(item.price);
+    setEditedPrice(item.price ?? 0);
     setEditedName(item.name);
     setIsEditing(true);
   };
@@ -60,7 +60,7 @@ function Item({ item, refreshParent }: { item: Item; refreshParent: () => void }
               type='number'
               step='0.01'
               value={editedPrice}
-              onChange={e => setEditedPrice(e.target.valueAsNumber)}
+              onChange={e => setEditedPrice(e.target.valueAsNumber ?? 0)}
             />
 
             <FontAwesomeIcon icon={faCheck} size='lg' className='text-green-500' onClick={finishEditing} />
@@ -72,7 +72,7 @@ function Item({ item, refreshParent }: { item: Item; refreshParent: () => void }
 
           <div className='flex items-center gap-4'>
             <p className='text-green-500 select-none'>
-              <span className='font-bold'>{item.price.toFixed(2)}</span> лв.
+              <span className='font-bold'>{(item.price ?? 0).toFixed(2)}</span> лв.
             </p>
 
             <FontAwesomeIcon icon={faPen} className='text-green-500' onClick={startEditing} />

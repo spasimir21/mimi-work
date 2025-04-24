@@ -5,11 +5,28 @@ type ReadonlyDeep<T> =
   : T;
 
 class Store<T> {
-  public readonly data: ReadonlyDeep<T>;
+  public password: string = '';
+  public data: ReadonlyDeep<T>;
 
   constructor(public readonly key: string, defaultData: T) {
-    const savedString = localStorage.getItem(key);
-    this.data = savedString ? JSON.parse(savedString) : defaultData;
+    this.data = defaultData as any;
+  }
+
+  async load() {
+    try {
+      const req = await fetch(`http://localhost:3000/${this.key}`, {
+        headers: { 'x-password': this.password }
+      });
+
+      if (req.status === 404) return true;
+      if (!req.ok) return false;
+
+      this.data = await req.json();
+
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   update(callback: (data: T) => void) {
@@ -17,8 +34,20 @@ class Store<T> {
     this.save();
   }
 
-  save() {
-    localStorage.setItem(this.key, JSON.stringify(this.data));
+  async save() {
+    try {
+      await fetch(`http://localhost:3000/${this.key}`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-password': this.password
+        },
+        body: JSON.stringify(this.data)
+      });
+    } catch {
+      localStorage.clear();
+      window.location.reload();
+    }
   }
 }
 
