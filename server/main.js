@@ -1,5 +1,5 @@
-const { sha512 } = require('js-sha512');
 const express = require('express');
+const crypto = require('crypto');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
@@ -13,9 +13,11 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, './dist')));
 app.use(express.json());
 
+const hash = text => crypto.createHash('sha1').update(text).digest('hex');
+
 app.use((req, res, next) => {
   const password = req.headers['x-password'] ?? '';
-  if (sha512(password) === passwordHash) return void next();
+  if (hash(password) === passwordHash) return void next();
   res.sendStatus(401);
 });
 
