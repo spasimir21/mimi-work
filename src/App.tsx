@@ -26,7 +26,7 @@ function App() {
       <ItemStoreContext.Provider value={ITEM_STORE}>
         <BillStoreContext.Provider value={BILL_STORE}>
           <TableStoreContext.Provider value={TABLE_STORE}>
-            <div className='spinner z-50 text-green-500 absolute grid place-items-center top-1 right-1 rounded-full bg-white p-1'>
+            <div className='spinner z-50 text-green-500 fixed grid place-items-center top-1 right-1 rounded-full bg-white p-1'>
               <FontAwesomeIcon icon={faSpinner} size='xl' />
             </div>
 
