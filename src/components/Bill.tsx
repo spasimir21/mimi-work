@@ -2,8 +2,8 @@ import { faCheck, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { type Bill, BillStoreContext } from '../context/BillStoreContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ItemStoreContext } from '../context/ItemStoreContext';
-import { useContext, useState } from 'react';
 import { RouteContext } from '../context/RouteContext';
+import { useContext, useState } from 'react';
 
 function Bill({ bill, refreshParent }: { bill: Bill; refreshParent: () => void }) {
   const BillStore = useContext(BillStoreContext);
@@ -18,6 +18,8 @@ function Bill({ bill, refreshParent }: { bill: Bill; refreshParent: () => void }
     (total, [itemId, count]) => total + ItemStore.data.items[itemId].price * count,
     0
   );
+
+  const itemsToServe = Object.entries(bill.itemsToServe ?? {}).reduce((total, [_, count]) => total + count, 0);
 
   const startEditing = () => {
     setEditedName(bill.name);
@@ -65,7 +67,14 @@ function Bill({ bill, refreshParent }: { bill: Bill; refreshParent: () => void }
         </>
       ) : (
         <>
-          <p className='text-gray-700 select-none'>{bill.name}</p>
+          <div className='flex items-center gap-2'>
+            <p className='text-gray-700 select-none'>{bill.name}</p>
+            {itemsToServe > 0 && (
+              <div className='rounded-full text-white font-bold grid place-items-center w-6 h-6 bg-amber-400'>
+                {itemsToServe}
+              </div>
+            )}
+          </div>
 
           <div className='flex items-center gap-4'>
             <p className='text-green-500 select-none'>

@@ -5,6 +5,7 @@ interface Bill {
   id: string;
   tableId: string;
   name: string;
+  itemsToServe?: Record<string, number>;
   items: Record<string, number>;
 }
 
