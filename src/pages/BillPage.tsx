@@ -91,6 +91,16 @@ function BillPage() {
       refresh();
     });
 
+  const addItem = (itemId: string) =>
+    BillStore.update(({ bills }) => {
+      const bill = bills[(route as any).id];
+
+      if (itemId in bill.items) bill.items[itemId]++;
+      else bill.items[itemId] = 1;
+
+      refresh();
+    });
+
   const subItem = (itemId: string) =>
     BillStore.update(({ bills }) => {
       const bill = bills[(route as any).id];
@@ -252,7 +262,7 @@ function BillPage() {
 
                 <div
                   className='bg-white rounded-full w-6 h-6 border-2 border-gray-400 grid place-items-center'
-                  onClick={() => addItemToServe(item.id)}>
+                  onClick={() => addItem(item.id)}>
                   <FontAwesomeIcon icon={faAdd} className='text-green-500' />
                 </div>
               </div>
